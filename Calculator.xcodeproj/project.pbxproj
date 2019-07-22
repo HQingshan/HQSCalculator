@@ -13,6 +13,10 @@
 		1804763B22E160A10056BB8E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1804763A22E160A10056BB8E /* Assets.xcassets */; };
 		1804763E22E160A10056BB8E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1804763C22E160A10056BB8E /* LaunchScreen.storyboard */; };
 		1804764122E160A10056BB8E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1804764022E160A10056BB8E /* main.m */; };
+		1804764D22E1B53D0056BB8E /* UITableView+SDAutoTableViewCellHeight.m in Sources */ = {isa = PBXBuildFile; fileRef = 1804764A22E1B53C0056BB8E /* UITableView+SDAutoTableViewCellHeight.m */; };
+		1804764E22E1B53D0056BB8E /* UIView+SDAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1804764C22E1B53C0056BB8E /* UIView+SDAutoLayout.m */; };
+		1804765122E205ED0056BB8E /* HQS_Label.m in Sources */ = {isa = PBXBuildFile; fileRef = 1804765022E205ED0056BB8E /* HQS_Label.m */; };
+		1804765422E2062D0056BB8E /* HQSButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1804765322E2062D0056BB8E /* HQSButton.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +30,15 @@
 		1804763D22E160A10056BB8E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1804763F22E160A10056BB8E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1804764022E160A10056BB8E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		1804764822E1B53C0056BB8E /* SDAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SDAutoLayout.h; sourceTree = "<group>"; };
+		1804764922E1B53C0056BB8E /* UITableView+SDAutoTableViewCellHeight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+SDAutoTableViewCellHeight.h"; sourceTree = "<group>"; };
+		1804764A22E1B53C0056BB8E /* UITableView+SDAutoTableViewCellHeight.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+SDAutoTableViewCellHeight.m"; sourceTree = "<group>"; };
+		1804764B22E1B53C0056BB8E /* UIView+SDAutoLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+SDAutoLayout.h"; sourceTree = "<group>"; };
+		1804764C22E1B53C0056BB8E /* UIView+SDAutoLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+SDAutoLayout.m"; sourceTree = "<group>"; };
+		1804764F22E205ED0056BB8E /* HQS_Label.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HQS_Label.h; sourceTree = "<group>"; };
+		1804765022E205ED0056BB8E /* HQS_Label.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HQS_Label.m; sourceTree = "<group>"; };
+		1804765222E2062D0056BB8E /* HQSButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HQSButton.h; sourceTree = "<group>"; };
+		1804765322E2062D0056BB8E /* HQSButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HQSButton.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,10 +71,15 @@
 		1804763022E160A00056BB8E /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
+				1804764722E1B53C0056BB8E /* SDAutoLayout */,
 				1804763122E160A00056BB8E /* AppDelegate.h */,
 				1804763222E160A00056BB8E /* AppDelegate.m */,
 				1804763422E160A00056BB8E /* ViewController.h */,
 				1804763522E160A00056BB8E /* ViewController.m */,
+				1804765222E2062D0056BB8E /* HQSButton.h */,
+				1804765322E2062D0056BB8E /* HQSButton.m */,
+				1804764F22E205ED0056BB8E /* HQS_Label.h */,
+				1804765022E205ED0056BB8E /* HQS_Label.m */,
 				1804763722E160A00056BB8E /* Main.storyboard */,
 				1804763A22E160A10056BB8E /* Assets.xcassets */,
 				1804763C22E160A10056BB8E /* LaunchScreen.storyboard */,
@@ -69,6 +87,18 @@
 				1804764022E160A10056BB8E /* main.m */,
 			);
 			path = Calculator;
+			sourceTree = "<group>";
+		};
+		1804764722E1B53C0056BB8E /* SDAutoLayout */ = {
+			isa = PBXGroup;
+			children = (
+				1804764822E1B53C0056BB8E /* SDAutoLayout.h */,
+				1804764922E1B53C0056BB8E /* UITableView+SDAutoTableViewCellHeight.h */,
+				1804764A22E1B53C0056BB8E /* UITableView+SDAutoTableViewCellHeight.m */,
+				1804764B22E1B53C0056BB8E /* UIView+SDAutoLayout.h */,
+				1804764C22E1B53C0056BB8E /* UIView+SDAutoLayout.m */,
+			);
+			path = SDAutoLayout;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -97,6 +127,7 @@
 		1804762622E160A00056BB8E /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = HQS;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "你好帅";
 				TargetAttributes = {
@@ -142,8 +173,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				1804763622E160A00056BB8E /* ViewController.m in Sources */,
+				1804765422E2062D0056BB8E /* HQSButton.m in Sources */,
 				1804764122E160A10056BB8E /* main.m in Sources */,
+				1804764D22E1B53D0056BB8E /* UITableView+SDAutoTableViewCellHeight.m in Sources */,
 				1804763322E160A00056BB8E /* AppDelegate.m in Sources */,
+				1804764E22E1B53D0056BB8E /* UIView+SDAutoLayout.m in Sources */,
+				1804765122E205ED0056BB8E /* HQS_Label.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
