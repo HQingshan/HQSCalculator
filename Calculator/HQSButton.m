@@ -15,7 +15,7 @@
     
     [self setTitle:@"+" forState:UIControlStateNormal];
     [self setTitleColor:[UIColor darkGrayColor] forState:UIControlStateNormal];
-    self.titleLabel.font = [UIFont systemFontOfSize:27 weight:UIFontWeightLight];
+    self.titleLabel.font = [UIFont systemFontOfSize:27 weight:UIFontWeightThin];
 
     self.layer.borderColor = [UIColor colorWithRed:236.0f/255.0f green:237.0f/255.0f blue:237.0f/255.0f alpha:1].CGColor ;
     self.layer.borderWidth = 0.5f; //设置边框粗细
@@ -47,6 +47,9 @@
     if ([self.Sign isEqualToString:@"="]) {
         self.backgroundColor = [UIColor colorWithRed:249.0f/255.0f green:119.0f/255.0f blue:59.0f/255.0f alpha:1];
     }
+    
+    //发布通知  把被点的button位置发到ViewController
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"input" object: self.Sign ];
 }
 
 - (void)setSign:(NSString *)Sign
@@ -63,6 +66,7 @@
     
      [self setTitle:Sign forState:UIControlStateNormal];
     
+
  
 }
 

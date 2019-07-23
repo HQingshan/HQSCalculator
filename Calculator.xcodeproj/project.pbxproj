@@ -17,6 +17,7 @@
 		1804764E22E1B53D0056BB8E /* UIView+SDAutoLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 1804764C22E1B53C0056BB8E /* UIView+SDAutoLayout.m */; };
 		1804765122E205ED0056BB8E /* HQS_Label.m in Sources */ = {isa = PBXBuildFile; fileRef = 1804765022E205ED0056BB8E /* HQS_Label.m */; };
 		1804765422E2062D0056BB8E /* HQSButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 1804765322E2062D0056BB8E /* HQSButton.m */; };
+		1840EE4D22E74E1D002F4962 /* Calculate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1840EE4B22E74E1D002F4962 /* Calculate.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,8 @@
 		1804765022E205ED0056BB8E /* HQS_Label.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HQS_Label.m; sourceTree = "<group>"; };
 		1804765222E2062D0056BB8E /* HQSButton.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HQSButton.h; sourceTree = "<group>"; };
 		1804765322E2062D0056BB8E /* HQSButton.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HQSButton.m; sourceTree = "<group>"; };
+		1840EE4B22E74E1D002F4962 /* Calculate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Calculate.m; sourceTree = "<group>"; };
+		1840EE4C22E74E1D002F4962 /* Calculate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Calculate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +79,8 @@
 				1804763222E160A00056BB8E /* AppDelegate.m */,
 				1804763422E160A00056BB8E /* ViewController.h */,
 				1804763522E160A00056BB8E /* ViewController.m */,
+				1840EE4C22E74E1D002F4962 /* Calculate.h */,
+				1840EE4B22E74E1D002F4962 /* Calculate.m */,
 				1804765222E2062D0056BB8E /* HQSButton.h */,
 				1804765322E2062D0056BB8E /* HQSButton.m */,
 				1804764F22E205ED0056BB8E /* HQS_Label.h */,
@@ -176,6 +181,7 @@
 				1804765422E2062D0056BB8E /* HQSButton.m in Sources */,
 				1804764122E160A10056BB8E /* main.m in Sources */,
 				1804764D22E1B53D0056BB8E /* UITableView+SDAutoTableViewCellHeight.m in Sources */,
+				1840EE4D22E74E1D002F4962 /* Calculate.m in Sources */,
 				1804763322E160A00056BB8E /* AppDelegate.m in Sources */,
 				1804764E22E1B53D0056BB8E /* UIView+SDAutoLayout.m in Sources */,
 				1804765122E205ED0056BB8E /* HQS_Label.m in Sources */,
