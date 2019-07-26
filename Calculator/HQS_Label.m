@@ -16,7 +16,7 @@
 //    self.text = @"0";
     self.textAlignment = NSTextAlignmentRight;
     
-    self.font = [UIFont systemFontOfSize:27 weight:UIFontWeightLight];
+    self.font = [UIFont systemFontOfSize:27 weight:UIFontWeightThin];
     self.adjustsFontSizeToFitWidth = YES;
     
     return self;

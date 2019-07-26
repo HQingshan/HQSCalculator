@@ -1,5 +1,5 @@
 //
-//  clculate.m
+//  Clculate.m
 //  iClCUlator_test
 //
 //  Created by Liu_zc on 2019/7/22.
@@ -9,95 +9,126 @@
 #import "Calculate.h"
 
 @interface Calculate ()
-@property (nonatomic, strong) NSMutableArray *equArr;
-@property (nonatomic, strong) NSMutableArray *putArr; //输出串
-@property (nonatomic, strong) NSMutableArray *stack; //一个栈
 
+@property (nonatomic, strong) NSString *Result; //结果
+
+@property (nonatomic, strong) NSArray *SignsArray;
 
 
 @end
 
 @implementation Calculate
 
-- (float)clculate:(NSString *)Equ {
+- (NSArray *)SignsArray{
     
-    [self dealThem:Equ];  //处理字符串
-    
-    [self poland]; //化为逆波兰表达式
-
-    return [self calculate:self.putArr];
+    if (_SignsArray == NULL) {
+        NSArray *SignsArray = @[@"+",@"-",@"×",@"÷",@"√",@"%",@"ln"];
+        _SignsArray = SignsArray;
+    }
+    return _SignsArray;
 }
-- (void) dealThem:(NSString *)Equ {
-//    99!*!99
+
+
+- (NSString *) Calculate:(NSString *)Equation {
+    
+    [self dealThem:Equation];  //处理并运算字符串
+    
+    
+    return self.Result;
+}
+
+- (void) dealThem:(NSString *)Equation {
     ///将乘除换为*/,并在符号两端加标示
-    Equ = [Equ stringByReplacingOccurrencesOfString:@"(" withString:@"!(!"];
-    Equ = [Equ stringByReplacingOccurrencesOfString:@")" withString:@"!)!"];
-    Equ = [Equ stringByReplacingOccurrencesOfString:@"+" withString:@"!+!"];
-    Equ = [Equ stringByReplacingOccurrencesOfString:@"-" withString:@"!-!"];
-    Equ = [Equ stringByReplacingOccurrencesOfString:@"×" withString:@"!*!"];
-    Equ = [Equ stringByReplacingOccurrencesOfString:@"÷" withString:@"!/!"];
-    self.equArr = [[NSMutableArray alloc] init];
-    self.putArr = [[NSMutableArray alloc] init];
-    self.stack  = [[NSMutableArray alloc] init];
     
-    NSMutableArray *array = [Equ componentsSeparatedByString:@"!"].mutableCopy;
+    Equation = [Equation stringByReplacingOccurrencesOfString:@"[" withString:@"("];
+    Equation = [Equation stringByReplacingOccurrencesOfString:@"]" withString:@")"];
+    Equation = [Equation stringByReplacingOccurrencesOfString:@"{" withString:@"("];
+    Equation = [Equation stringByReplacingOccurrencesOfString:@"}" withString:@")"];
+    Equation = [Equation stringByReplacingOccurrencesOfString:@"(-" withString:@"(0-"];
+    Equation = [Equation stringByReplacingOccurrencesOfString:@"(+" withString:@"("];
+    Equation = [Equation stringByReplacingOccurrencesOfString:@"(" withString:@"|(|"];
+    Equation = [Equation stringByReplacingOccurrencesOfString:@")" withString:@"|)|"];
+    Equation = [Equation stringByReplacingOccurrencesOfString:@"+" withString:@"|+|"];
+    Equation = [Equation stringByReplacingOccurrencesOfString:@"-" withString:@"|-|"];
+    Equation = [Equation stringByReplacingOccurrencesOfString:@"×" withString:@"|*|"];
+    Equation = [Equation stringByReplacingOccurrencesOfString:@"÷" withString:@"|/|"];
+    Equation = [Equation stringByReplacingOccurrencesOfString:@"√" withString:@"|√|"];
+    Equation = [Equation stringByReplacingOccurrencesOfString:@"ln" withString:@"|ln|"];
+    
+    NSMutableArray *array = [Equation componentsSeparatedByString:@"|"].mutableCopy;
     [array removeObject:@""];
-    self.equArr = array.mutableCopy;
     
-    NSLog(@"%@",self.equArr);
-//    /// 将Equ切成单个字符
-//    for (int i = 0; i < Equ.length ; i++) {
-//        NSRange subRange = NSMakeRange(i, 1);
-//        [self.equArr addObject:[Equ substringWithRange:subRange]];
-//        NSLog(@"%@",self.equArr);
-//    }  //至此做完准备
+    if ([array[0] isEqualToString:@"-"]||[array[0] isEqualToString:@"+"]) {
+        [array insertObject:@"0" atIndex:0];
+    }
+    
+    
+    
+    NSMutableArray *EquationArray  = array.mutableCopy;
+    
+    
+    [self Compute: [self TranslateToInversePolandForClculate:EquationArray] ];
+
 }
 
-- (void) poland {
-    for (int j = 0; j < self.equArr.count; j++) {  // 1、最外围，对每个操作字符进行遍历
+- (NSMutableArray *)TranslateToInversePolandForClculate: (NSMutableArray *)EquationArray{
+    
+    NSMutableArray *Stack  = [[NSMutableArray alloc] init];
+    
+    NSMutableArray *OutputArray = [[NSMutableArray alloc] init];
+
+    
+    for (int j = 0; j < EquationArray.count; j++) {  // 1、最外围，对每个操作字符进行遍历
+        NSString *Chars = EquationArray[j];
+        
+        //操作符号判断
+        BOOL flag = ([Chars isEqual:@"("] || [Chars isEqual:@")"] ||[Chars isEqual:@"/"] || [Chars isEqual:@"*"] ||[Chars isEqual:@"+"] || [Chars isEqual:@"-"]||[Chars isEqual:@"√"]||[Chars isEqual:@"ln"]);
         
         /// 2、如果是数字，则添加到输出串中
-        if (!([self.equArr[j] isEqual:@"("] || [self.equArr[j] isEqual:@")"] ||[self.equArr[j] isEqual:@"/"] ||[self.equArr[j] isEqual:@"*"] ||[self.equArr[j] isEqual:@"+"] || [self.equArr[j] isEqual:@"-"])) {
+        if (!flag) {
             
             //            NSLog(@"我是数字");
             NSLog(@"我是2步");
-            [self.putArr addObject:self.equArr[j]];  //至于输出串中
+            [OutputArray addObject:Chars ];  //至于输出串中
         }
         
         /// 3、如果扫描到开括号
-        if ([self.equArr[j] isEqual:@"("]) {
-            [self.stack addObject:self.equArr[j]];  //将开括号"(“入栈
+        if ([Chars isEqual:@"("]) {
+            [Stack addObject:Chars];  //将开括号"(“入栈
             NSLog(@"我是3步");
         }
         
         /// 4、如果扫描到操作符
-        while ([self.equArr[j] isEqual:@"/"] ||[self.equArr[j] isEqual:@"*"] ||[self.equArr[j] isEqual:@"+"] || [self.equArr[j] isEqual:@"-"]) {
+        while (flag) {
             
-            if (self.stack.count == 0 || [self.stack[self.stack.count - 1] isEqual:@"("]|| [self priority:self.equArr[j]] ) { //或||扫描到的操作符优先级高 //这里||判断完前一个若为真，即不会判断下一个，则不会造成self.stack.count - 1 为 -1的情况
-                [self.stack addObject:self.equArr[j]];  //将其入栈
+            
+            
+            if (Stack.count == 0 || [Stack[Stack.count - 1] isEqual:@"("]|| (([self.SignsArray indexOfObject:Chars]/2 > [self.SignsArray indexOfObject:Stack[Stack.count - 1] ]/2)&&(![Stack[Stack.count - 1] isEqual:@"√"])&&(![Stack[Stack.count - 1] isEqual:@"ln"]))  ) { // 或|| 扫描到的操作符优先级高 //这里||判断完前一个若为真，即不会判断下一个，则不会造成self.Stack.count - 1 为 -1的情况
+                [Stack addObject: Chars ];  //将其入栈
                 NSLog(@"我是4步1");
                 break;
             } else {
-                //            for (long int i = self.stack.count - 1; i >= 0; i--) {
-                [self.putArr addObject:self.stack[self.stack.count - 1]];  //出栈至输出串中
-                [self.stack replaceObjectAtIndex:self.stack.count - 1 withObject:self.equArr[j]];
+                [OutputArray addObject:Stack[Stack.count - 1]];  //出栈至输出串中
+                [Stack replaceObjectAtIndex:Stack.count - 1 withObject:Chars];
                 //            [self.putArr addObject:self.equArr[j]];
                 NSLog(@"我是4步2");
                 break;
-                //            }
-            }}
+                
+            }
+            
+        }
         
         /// 5、如果扫描到闭括号
-        if ([self.equArr[j] isEqual:@")"]) {
-            for (long int i = self.stack.count - 1; i >= 0; i--) {
-                if ([self.stack[i] isEqual:@"("]) {
-                    [self.stack removeObjectAtIndex:i];  //出栈并销毁
+        if ([EquationArray[j] isEqual:@")"]) {
+            for (long int i = Stack.count - 1; i >= 0; i--) {
+                if ([Stack[i] isEqual:@"("]) {
+                    [Stack removeObjectAtIndex:i];  //出栈并销毁
                     NSLog(@"我是5步");
                     break;
                 }
-                [self.putArr addObject:self.stack[i]];  //出栈至输出串中
-                [self.stack removeObjectAtIndex:i];
-                NSLog(@"%@",self.stack);
+                [OutputArray addObject:Stack[i]];  //出栈至输出串中
+                [Stack removeObjectAtIndex:i];
+                NSLog(@"%@",Stack);
                 
             }}
         
@@ -106,33 +137,24 @@
     }  //最外围，对每个操作字符进行遍历
     
     /// 7、循环结束后若栈中还有操作符
-    while (self.stack.count) {
-        for (long int i = self.stack.count - 1; i >= 0; i--) {
-            [self.putArr addObject:self.stack[i]];  //出栈至输出串中
+    while (Stack.count) {
+        for (long int i = Stack.count - 1; i >= 0; i--) {
+            [OutputArray addObject:Stack[i]];  //出栈至输出串中
         }
-        [self.stack removeAllObjects];
+        [Stack removeAllObjects];
     }
     
-    NSLog(@"我是最后一步");
-    NSLog(@"输出串：：：%@",self.putArr);
-    
-    ///结束
+//    NSLog(@"我是最后一步");
+    NSLog(@"输出串：%@",OutputArray);
+    return OutputArray;
 }
 
-- (int) priority:(NSString *)x {  //判断传入计算符与栈顶计算符的优先级
-    NSString *y = self.stack[self.stack.count - 1];
-    if ([y isEqual:@"+"]||[y isEqual:@"-"]) {
-        if ([x isEqual:@"*"]||[x isEqual:@"/"]) {
-            return 1;
-    }}
-    return 0;
-}
 
-- (float) calculate:(NSMutableArray *)arr {
-//    NSMutableArray *calArr = [[NSMutableArray alloc] init];
-    
+
+
+- (NSString *) Compute:(NSMutableArray *)arr {
     for (int i = 0; i < arr.count; i++) {
-        if ([arr[i] isEqual:@"/"] ||[arr[i] isEqual:@"*"] ||[arr[i] isEqual:@"+"] || [arr[i] isEqual:@"-"]) {
+        if ([arr[i] isEqual:@"/"] ||[arr[i] isEqual:@"*"] ||[arr[i] isEqual:@"+"] || [arr[i] isEqual:@"-"]|| [arr[i] isEqual:@"√"]|| [arr[i] isEqual:@"ln"]) {
             ///取前两位进行计算
             if ([arr[i] isEqual:@"+"]) {
                 float temp1 = [arr[i-2] floatValue];
@@ -175,12 +197,31 @@
                 i = -1;
                 continue;
             }
+            if ([arr[i] isEqual:@"√"]) {
+                float temp1 = [arr[i-1] floatValue];
+                float tempTotal = sqrt (temp1);
+                [arr replaceObjectAtIndex:i withObject:[NSString stringWithFormat:@"%f",tempTotal]];
+                [arr removeObjectAtIndex:i-1];
+                i = -1;
+                continue;
+            }
+            if ([arr[i] isEqual:@"ln"]) {
+                float temp1 = [arr[i-1] floatValue];
+                float tempTotal = logf(temp1);
+                [arr replaceObjectAtIndex:i withObject:[NSString stringWithFormat:@"%f",tempTotal]];
+                [arr removeObjectAtIndex:i-1];
+                i = -1;
+                continue;
+            }
         }
     
     }
+
+    NSString *num = [NSString stringWithFormat:@"%@",@([arr[0] floatValue]) ];
     
+    self.Result = num;
     
-    return [arr[0] floatValue];
+    return num  ;
 }
 
 @end

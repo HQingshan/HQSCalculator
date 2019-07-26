@@ -5,7 +5,7 @@
 //  Created by 你好帅 on 2019/7/19.
 //  Copyright © 2019 你好帅. All rights reserved.
 //
-
+#import <sys/utsname.h>
 #import "ViewController.h"
 #import "SDAutoLayout.h"
 #import "HQSButton.h"
@@ -151,25 +151,36 @@ CGFloat Liuhai = 0;
 
 -(void)input:(NSNotification *)noti{
     
-    NSString *String = [noti object];
+    NSString *InputString = [noti object];
+    NSString *LabelString = self.Firstlabel.text;
     NSArray *SignsArray = @[@"AC",@"⇦",@"↹",@"=",@"÷"
-                            ,@"×",@"-",@"+",@"0",@".",@"%"];
+                            ,@"×",@"-",@"+",@".",@"%",@"√"];
 //    NSArray *SignsArray2 = @[@[@"(",@")",@"√",@"X²",@"1/X",@"Xⁿ"]
 //                            ,@[@"[",@"]",@"X!",@"e",@"lg",@"ln"]
 //                            ,@[@"{",@"}",@"‰",@"‱",@"mc",@"mr"]
 //                            ,@[@"2nd",@"sinh",@"cosh",@"tanh",@"m+",@"m-"]
 //                            ,@[@"sin",@"cos",@"tan",@"°",@"Rad",@"π"]];
+//    NSLog(@"%i",[SignsArray  indexOfObject: InputString] );
     
-    switch ( [SignsArray  indexOfObject: String] ) {
+    if ([SignsArray  indexOfObject: InputString] == 10) {
+        InputString = @"√(";
+    }
+    if ([InputString isEqualToString: @"ln" ] ) {
+        InputString = @"ln(";
+    }
+    
+    switch ( [SignsArray  indexOfObject: InputString] ) {
         case 0 :
-        {self.Firstlabel.text = nil;}
+        {self.Firstlabel.text = nil;
+         self.Secondlabel.text = nil;
+        }
             break;
             
         case 1:
             {
-                NSString *Str = self.Firstlabel.text;
+                
                 if ([self.Firstlabel.text length]) {
-                    self.Firstlabel.text = [Str substringToIndex: [self.Firstlabel.text length]-1 ];
+                    self.Firstlabel.text = [LabelString substringToIndex: [self.Firstlabel.text length]-1 ];
                 }
             }
             break;
@@ -182,21 +193,41 @@ CGFloat Liuhai = 0;
             [self MakeCalculation: self.Firstlabel.text];
         }
             break;
-            
+        case 4:  case 5:  case 6:   case 7: case 8:
+        case 9: {
+            switch ([SignsArray  indexOfObject: [LabelString substringFromIndex: LabelString.length - 1 ] ]) {
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9: break;
+                default:{
+                    if (self.Firstlabel.text == nil) {
+                        self.Firstlabel.text =  InputString;
+                        self.Firstlabel.font = [UIFont systemFontOfSize: ScrH*0.1 weight:UIFontWeightThin];
+                    }else{
+                        self.Firstlabel.text =[self.Firstlabel.text stringByAppendingString: InputString];
+                    }
+                }break;
+                    
+            }
+        } break;
+
 
         default:{
-            self.Firstlabel.text =[self.Firstlabel.text stringByAppendingString: [noti object]];
             
             if (self.Firstlabel.text == nil) {
-                
-                self.Firstlabel.text =  [noti object];
+                self.Firstlabel.text = InputString;
                 self.Firstlabel.font = [UIFont systemFontOfSize: ScrH*0.1 weight:UIFontWeightThin];
+            }else{
+                self.Firstlabel.text =[self.Firstlabel.text stringByAppendingString: InputString];
+                
             }
         }
             break;
     }
     
-//    NSLog(@"%f",[@"⇦"  floatValue]);
 
 
     
@@ -398,22 +429,16 @@ CGFloat Liuhai = 0;
 }
 
 -(void)MakeCalculation:(NSString *)MuthString{
-    self.Secondlabel.text = MuthString;
-    self.Secondlabel.font = [UIFont systemFontOfSize: ScrH*0.1 weight:UIFontWeightThin];
+
     
     Calculate *cal = [[Calculate alloc] init];
     
-    NSString *outNum =[NSString stringWithFormat:@"%f",[cal clculate:MuthString]];
-    
-    
-    self.Firstlabel.text = [self removeFloatAllZeroByString:outNum] ;
+//    NSLog(@"------%@-----",@([cal Clculate:MuthString].floatValue));
+    self.Secondlabel.text = [NSString stringWithFormat:@"%@",@([cal  Calculate:MuthString].floatValue)];
+    self.Secondlabel.font = [UIFont systemFontOfSize: ScrH*0.1 weight:UIFontWeightThin];
     
 }
 
-- (NSString*)removeFloatAllZeroByString:(NSString *)testNumber{
-    NSString * outNumber = [NSString stringWithFormat:@"%@",@(testNumber.floatValue)];
-    return outNumber;
-}
 
 @end
 

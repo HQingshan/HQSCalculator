@@ -1,5 +1,5 @@
 //
-//  clculate.h
+//  Clculate.h
 //  iClCUlator_test
 //
 //  Created by Liu_zc on 2019/7/22.
@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface Calculate : NSObject
 
-- (float) clculate:(NSString *)Equ;
+- (NSString *)  Calculate:(NSString *)Equation;
 
 @end
 
