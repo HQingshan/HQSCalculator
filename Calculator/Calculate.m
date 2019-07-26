@@ -54,7 +54,8 @@
     Equation = [Equation stringByReplacingOccurrencesOfString:@"÷" withString:@"|/|"];
     Equation = [Equation stringByReplacingOccurrencesOfString:@"√" withString:@"|√|"];
     Equation = [Equation stringByReplacingOccurrencesOfString:@"ln" withString:@"|ln|"];
-    
+    Equation = [Equation stringByReplacingOccurrencesOfString:@"²" withString:@"|²|"];
+    Equation = [Equation stringByReplacingOccurrencesOfString:@"!" withString:@"|!|"];
     NSMutableArray *array = [Equation componentsSeparatedByString:@"|"].mutableCopy;
     [array removeObject:@""];
     
@@ -82,7 +83,7 @@
         NSString *Chars = EquationArray[j];
         
         //操作符号判断
-        BOOL flag = ([Chars isEqual:@"("] || [Chars isEqual:@")"] ||[Chars isEqual:@"/"] || [Chars isEqual:@"*"] ||[Chars isEqual:@"+"] || [Chars isEqual:@"-"]||[Chars isEqual:@"√"]||[Chars isEqual:@"ln"]);
+        BOOL flag = ([Chars isEqual:@"("] || [Chars isEqual:@")"] ||[Chars isEqual:@"/"] || [Chars isEqual:@"*"] ||[Chars isEqual:@"+"] || [Chars isEqual:@"-"]||[Chars isEqual:@"√"]||[Chars isEqual:@"ln"]||[Chars isEqual:@"²"]||[Chars isEqual:@"!"]);
         
         /// 2、如果是数字，则添加到输出串中
         if (!flag) {
@@ -101,7 +102,12 @@
         /// 4、如果扫描到操作符
         while (flag) {
             
-            
+            if ([Chars isEqual:@"²"]||[Chars isEqual:@"!"]) {
+                [OutputArray addObject: Chars ];
+//                NSLog(@"6666666");
+                break;
+            }
+//            NSLog(@"6666666");
             
             if (Stack.count == 0 || [Stack[Stack.count - 1] isEqual:@"("]|| (([self.SignsArray indexOfObject:Chars]/2 > [self.SignsArray indexOfObject:Stack[Stack.count - 1] ]/2)&&(![Stack[Stack.count - 1] isEqual:@"√"])&&(![Stack[Stack.count - 1] isEqual:@"ln"]))  ) { // 或|| 扫描到的操作符优先级高 //这里||判断完前一个若为真，即不会判断下一个，则不会造成self.Stack.count - 1 为 -1的情况
                 [Stack addObject: Chars ];  //将其入栈
@@ -154,7 +160,8 @@
 
 - (NSString *) Compute:(NSMutableArray *)arr {
     for (int i = 0; i < arr.count; i++) {
-        if ([arr[i] isEqual:@"/"] ||[arr[i] isEqual:@"*"] ||[arr[i] isEqual:@"+"] || [arr[i] isEqual:@"-"]|| [arr[i] isEqual:@"√"]|| [arr[i] isEqual:@"ln"]) {
+        if ([arr[i] isEqual:@"/"] ||[arr[i] isEqual:@"*"] ||[arr[i] isEqual:@"+"] || [arr[i] isEqual:@"-"]|| [arr[i] isEqual:@"√"]|| [arr[i] isEqual:@"ln"]
+            || [arr[i] isEqual:@"²"]|| [arr[i] isEqual:@"!"]) {
             ///取前两位进行计算
             if ([arr[i] isEqual:@"+"]) {
                 float temp1 = [arr[i-2] floatValue];
@@ -208,6 +215,24 @@
             if ([arr[i] isEqual:@"ln"]) {
                 float temp1 = [arr[i-1] floatValue];
                 float tempTotal = logf(temp1);
+                [arr replaceObjectAtIndex:i withObject:[NSString stringWithFormat:@"%f",tempTotal]];
+                [arr removeObjectAtIndex:i-1];
+                i = -1;
+                continue;
+            }
+            if ([arr[i] isEqual:@"²"]) {
+                float temp1 = [arr[i-1] floatValue];
+                float tempTotal = temp1*temp1;
+                [arr replaceObjectAtIndex:i withObject:[NSString stringWithFormat:@"%f",tempTotal]];
+                [arr removeObjectAtIndex:i-1];
+                i = -1;
+                continue;
+            }
+            if ([arr[i] isEqual:@"!"]) {
+                int temp1 = [arr[i-1] intValue];
+                float tempTotal = 1 ;
+                for(int n=1;n<=temp1;n++)
+                    tempTotal=tempTotal*n;
                 [arr replaceObjectAtIndex:i withObject:[NSString stringWithFormat:@"%f",tempTotal]];
                 [arr removeObjectAtIndex:i-1];
                 i = -1;

@@ -162,11 +162,36 @@ CGFloat Liuhai = 0;
 //                            ,@[@"sin",@"cos",@"tan",@"°",@"Rad",@"π"]];
 //    NSLog(@"%i",[SignsArray  indexOfObject: InputString] );
     
+    if ([InputString isEqualToString: @"Xⁿ" ] ) {
+        InputString = @"^";
+    }
+
+    
     if ([SignsArray  indexOfObject: InputString] == 10) {
         InputString = @"√(";
     }
     if ([InputString isEqualToString: @"ln" ] ) {
         InputString = @"ln(";
+    }
+    if ([InputString isEqualToString: @"lg" ] ) {
+        InputString = @"lg(";
+    }
+
+    if ([InputString isEqualToString: @"X²" ] ) {
+        InputString = @"²";
+    }
+    if ([InputString isEqualToString: @"X!" ] ) {
+        InputString = @"!";
+    }
+    if ([InputString isEqualToString: @"1/X" ] ) {
+        InputString = @"1/";
+    }
+    if ([InputString isEqualToString: @"π" ] ) {
+        InputString = @"3.141592";
+    }
+    
+    if ([InputString isEqualToString: @"e" ] ) {
+        InputString = @"2.718281";
     }
     
     switch ( [SignsArray  indexOfObject: InputString] ) {
@@ -386,7 +411,6 @@ CGFloat Liuhai = 0;
     
     
 }
-
 
 -(void)setLineView:(UIView *)lineview WithButtonView:(UIView *)ButtonView forArr: (NSArray *)signs{
     
