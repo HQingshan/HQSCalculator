@@ -22,7 +22,7 @@
 - (NSArray *)SignsArray{
     
     if (_SignsArray == NULL) {
-        NSArray *SignsArray = @[@"+",@"-",@"×",@"÷",@"√",@"%",@"ln"];
+        NSArray *SignsArray = @[@"+",@"-",@"×",@"÷",@"√",@"ln"];
         _SignsArray = SignsArray;
     }
     return _SignsArray;
@@ -100,14 +100,12 @@
         }
         
         /// 4、如果扫描到操作符
-        while (flag) {
+        while ( [Chars isEqual:@"/"] || [Chars isEqual:@"*"] ||[Chars isEqual:@"+"] || [Chars isEqual:@"-"]||[Chars isEqual:@"√"]||[Chars isEqual:@"ln"]||[Chars isEqual:@"²"]||[Chars isEqual:@"!"] ) {
             
             if ([Chars isEqual:@"²"]||[Chars isEqual:@"!"]) {
                 [OutputArray addObject: Chars ];
-//                NSLog(@"6666666");
                 break;
             }
-//            NSLog(@"6666666");
             
             if (Stack.count == 0 || [Stack[Stack.count - 1] isEqual:@"("]|| (([self.SignsArray indexOfObject:Chars]/2 > [self.SignsArray indexOfObject:Stack[Stack.count - 1] ]/2)&&(![Stack[Stack.count - 1] isEqual:@"√"])&&(![Stack[Stack.count - 1] isEqual:@"ln"]))  ) { // 或|| 扫描到的操作符优先级高 //这里||判断完前一个若为真，即不会判断下一个，则不会造成self.Stack.count - 1 为 -1的情况
                 [Stack addObject: Chars ];  //将其入栈
@@ -128,13 +126,14 @@
         if ([EquationArray[j] isEqual:@")"]) {
             for (long int i = Stack.count - 1; i >= 0; i--) {
                 if ([Stack[i] isEqual:@"("]) {
-                    [Stack removeObjectAtIndex:i];  //出栈并销毁
+                    [Stack removeObjectAtIndex:i];
                     NSLog(@"我是5步");
                     break;
                 }
+                
                 [OutputArray addObject:Stack[i]];  //出栈至输出串中
                 [Stack removeObjectAtIndex:i];
-                NSLog(@"%@",Stack);
+//                NSLog(@"Stack-----%@",Stack);
                 
             }}
         
